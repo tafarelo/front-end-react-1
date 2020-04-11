@@ -12,12 +12,15 @@ function App() {
       techs: ["react", "react native"]
     }
     const POST_REPOSITORIE = await api.post('/repositories', repositorie);
-    getRepositories();
+    setRepositories([...repositories, POST_REPOSITORIE.data]);
   }
 
   async function handleRemoveRepository(id) {
     const DELETE_REPOSITORIE = await api.delete(`/repositories/${id}`);
-    getRepositories();
+    let copyArray = [...repositories];
+    const index = repositories.findIndex((item) => item.id === id);
+    copyArray.splice(index, 1);
+    setRepositories([...copyArray]);
   }
 
   async function getRepositories() {
